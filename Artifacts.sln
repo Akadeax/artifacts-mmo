@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtifactsApiClient", "ArtifactsApiClient\ArtifactsApiClient.csproj", "{FD0BF432-C150-44F6-BE11-0FDD9294B731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArtifactsBackend", "ArtifactsBackend\ArtifactsBackend.csproj", "{08AC9082-E5BD-4BB7-8965-D11FD51ACE7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD0BF432-C150-44F6-BE11-0FDD9294B731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0BF432-C150-44F6-BE11-0FDD9294B731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0BF432-C150-44F6-BE11-0FDD9294B731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0BF432-C150-44F6-BE11-0FDD9294B731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08AC9082-E5BD-4BB7-8965-D11FD51ACE7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08AC9082-E5BD-4BB7-8965-D11FD51ACE7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08AC9082-E5BD-4BB7-8965-D11FD51ACE7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08AC9082-E5BD-4BB7-8965-D11FD51ACE7A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

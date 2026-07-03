@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage"/>
+        <PackageReference Include="Microsoft.Kiota.Authentication.Azure" Version="2.0.0"/>
+        <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.0.0"/>
+    </ItemGroup>
+
+    <!-- This target ensures that tools are restored before trying to generate a client by using a marker file -->
+    <Target Name="RestoreTools" Outputs="../.internal/tools_restored.txt">
+        <Exec Command="dotnet tool restore -v q" Condition="!Exists('../.internal/tools_restored.txt')"/>
+        <WriteLinesToFile File="../.internal/tools_restored.txt"
+                          Lines="Tools were automatically restored; this is a marker file to make sure they were."
+                          Condition="!Exists('../.internal/tools_restored.txt')"/>
+    </Target>
+
+    <!-- This is the target responsible for generating the client. BeforeTargets=CollectPackageReferences runs this when 
+       the IDE is opened, dotnet restore is run, or a build happens -->
+    <Target Name="AutoGenerateArtifactsApiClient" BeforeTargets="CollectPackageReferences" Outputs="Generated/ArtifactsApiClient.cs"
+            DependsOnTargets="RestoreTools">
+        <Message Text="Generating Artifacts API Client..." Importance="High" Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>
+        <Exec Command="dotnet kiota generate -l csharp -c ArtifactsApiClient -n ArtifactsApiClient -d C:\Users\patri\Desktop\Mindustry\openapi.json -o ./Generated --co --ll error"
+              Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>
+        <!--        <Exec Command="dotnet kiota generate -l csharp -c ArtifactsApiClient -n ArtifactsApiClient -d https://api.artifactsmmo.com/openapi.json -o ./Generated &#45;&#45;co &#45;&#45;ll error"-->
+        <!--              Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>-->
+
+        <!-- If the client generation fails, we want to fail the build with a clear error message -->
+        <OnError ExecuteTargets="ArtifactsApiClientGenerationError"/>
+    </Target>
+
+    <!-- Error target, that will be executed if the client generation fails. -->
+    <Target Name="ArtifactsApiClientGenerationError">
+        <Error Text="ArtifactsApiClient could not be generated."/>
+    </Target>
+
+    <!-- This target is called when you do a dotnet clean on the project, forcing a re-generate later -->
+    <Target Name="CleanArtifactsApiClient" AfterTargets="CoreClean">
+        <RemoveDir Directories="Generated"/>
+    </Target>
+
+    <!-- This target allows you to regenerate the client by running dotnet msbuild -t:GenerateRestClient -->
+    <Target Name="GenerateArtifactsApiClient" DependsOnTargets="CleanArtifactsApiClient;GenerateArtifactsApiClient"/>
+</Project>
