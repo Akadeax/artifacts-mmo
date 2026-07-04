@@ -12,6 +12,12 @@
         <PackageReference Include="Microsoft.Kiota.Bundle" Version="2.0.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <None Update="OpenApiPatched.json">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
     <!-- This target ensures that tools are restored before trying to generate a client by using a marker file -->
     <Target Name="RestoreTools" Outputs="../.internal/tools_restored.txt">
         <Exec Command="dotnet tool restore -v q" Condition="!Exists('../.internal/tools_restored.txt')"/>
@@ -25,10 +31,8 @@
     <Target Name="AutoGenerateArtifactsApiClient" BeforeTargets="CollectPackageReferences" Outputs="Generated/ArtifactsApiClient.cs"
             DependsOnTargets="RestoreTools">
         <Message Text="Generating Artifacts API Client..." Importance="High" Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>
-        <Exec Command="dotnet kiota generate -l csharp -c ArtifactsApiClient -n ArtifactsApiClient -d C:\Users\patri\Desktop\Mindustry\openapi.json -o ./Generated --co --ll error"
+        <Exec Command="dotnet kiota generate -l csharp -c ArtifactsApiClient -n ArtifactsApiClient -d OpenApiPatched.json -o ./Generated --co --ll error"
               Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>
-        <!--        <Exec Command="dotnet kiota generate -l csharp -c ArtifactsApiClient -n ArtifactsApiClient -d https://api.artifactsmmo.com/openapi.json -o ./Generated &#45;&#45;co &#45;&#45;ll error"-->
-        <!--              Condition="!Exists('./Generated/ArtifactsApiClient.cs')"/>-->
 
         <!-- If the client generation fails, we want to fail the build with a clear error message -->
         <OnError ExecuteTargets="ArtifactsApiClientGenerationError"/>

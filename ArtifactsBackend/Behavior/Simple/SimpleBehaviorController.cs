@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ArtifactsBackend.Behavior.Base;
@@ -60,6 +61,8 @@ public sealed class SimpleBehaviorController : BaseBehaviorController
 
         ConsoleHelper.Error.NonFatal(
             $"SimpleBehaviorController of character {Character.Name} could not evaluate any action. All {m_Behaviors.Count} evaluated as \"Cannot Run\".");
+        ConsoleHelper.Info.Print("Delaying for 3 seconds before retrying evaluation...");
+        await Task.Delay(TimeSpan.FromSeconds(3));
     }
 
     private readonly SemaphoreSlim m_RunningSemaphore = new(1, 1);

@@ -31,11 +31,6 @@ public class App
 
     private async Task RegisterCharacters()
     {
-        CharacterMovementResponseSchema? result =
-            await ArtifactsHelper.Client.My["AkaMain"].Action.Move.PostAsync(new DestinationSchema { X = 0, Y = 7 });
-        Console.WriteLine($"Finished gathering, loc: {result.Data.Character.Y}");
-
-        return;
         var response = await ArtifactsHelper.Client.My.Characters.GetAsync().TryGetResult();
         if (!response.Success || response.Result is null)
         {

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ArtifactsApiClient")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8813f0e30837d89e2507d9f9b3bfa64862acac6a")]
 [assembly: System.Reflection.AssemblyProductAttribute("ArtifactsApiClient")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ArtifactsApiClient")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

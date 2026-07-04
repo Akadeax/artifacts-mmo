@@ -7,9 +7,9 @@ namespace ArtifactsBackend.Character;
 
 public class ArtifactsCharacter(CharacterSchema characterSchema)
 {
-    public string? Name => characterSchema.Name;
-    public int? X => characterSchema.X;
-    public int? Y => characterSchema.Y;
+    public string? Name => m_CharacterSchema.Name;
+    public int? X => m_CharacterSchema.X;
+    public int? Y => m_CharacterSchema.Y;
 
     public void StartBehavior(BaseBehaviorController behaviorController)
     {
@@ -21,12 +21,11 @@ public class ArtifactsCharacter(CharacterSchema characterSchema)
     {
         ArtifactsHelper.Response<CharacterMovementResponseSchema?> result = await ArtifactsHelper.Client
             .My[Name].Action.Move
-            .PostAsync(new DestinationSchema { MapId = 319 }).TryGetResult();
+            .PostAsync(new DestinationSchema { X = x, Y = y }).TryGetResult();
 
         if (result.Success)
         {
-            characterSchema.X = x;
-            characterSchema.Y = y;
+            m_CharacterSchema = result.Result!.Data!.Character!;
         }
 
         return result;
@@ -34,4 +33,5 @@ public class ArtifactsCharacter(CharacterSchema characterSchema)
 
 
     private BaseBehaviorController? m_BehaviorController;
+    private CharacterSchema m_CharacterSchema = characterSchema;
 }
